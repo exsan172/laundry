@@ -1,37 +1,62 @@
 import express from "express";
+import {body} from "express-validator"
+import checkToken from '../middleware/verifyToken.middleware.js'
 import transactionRouter from "../controller/transaction.controller.js";
+import {validatorMiddleware} from '../middleware/validator.middleware.js'
 const router = express.Router()
 
-router.get("/get-cabang", [
-    transactionRouter.login
+router.get("/get-cabang", checkToken, [
+    transactionRouter.getCabang
 ])
 
-router.post("/input-cabang", [
-    transactionRouter.login
+router.post("/input-cabang",
+    body("cabang").notEmpty(),
+    body("price").isNumeric(),
+    validatorMiddleware,
+    checkToken, [
+
+    transactionRouter.createCabang
 ])
 
-router.post("/edit-cabang", [
-    transactionRouter.login
+router.post("/edit-cabang",
+    body("id").notEmpty(),
+    body("cabang").notEmpty(),
+    body("price").isNumeric(),
+    validatorMiddleware,
+    checkToken, [
+
+    transactionRouter.updateCabang
 ])
 
-router.get("/delete-cabang", [
-    transactionRouter.login
+router.get("/delete-cabang/:id", [
+    transactionRouter.deleteCabang
 ])
 
-router.get("/get-transaksi", [
-    transactionRouter.login
+router.get("/get-transaksi/:id", checkToken, [
+    transactionRouter.getTransaksi
 ])
 
-router.post("/input-transaksi", [
-    transactionRouter.login
+router.post("/input-transaksi",
+    body("id_cabang").notEmpty(),
+    body("total_weight").isNumeric(),
+    validatorMiddleware,
+    checkToken, [
+
+    transactionRouter.createCabang
 ])
 
-router.post("/edit-transaksi", [
-    transactionRouter.login
+router.post("/edit-transaksi",
+    body("id_transaksi").notEmpty(),
+    body("id_cabang").notEmpty(),
+    body("total_weight").isNumeric(),
+    validatorMiddleware,
+    checkToken, [
+
+    transactionRouter.updateCabang
 ])
 
-router.get("/delete-transaksi", [
-    transactionRouter.login
+router.get("/delete-transaksi/:id", checkToken, [
+    transactionRouter.deleteTransaksi
 ])
 
 export default router

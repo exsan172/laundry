@@ -1,8 +1,12 @@
-const mongoose = require('mongoose')
+import mongoose from "mongoose"
 
 const cabangSchema = new mongoose.Schema({
-    nama_cabang : {
+    cabang : {
         type : String,
+        required : true
+    },
+    price : {
+        type : Number,
         required : true
     },
     createdAt : {
@@ -11,4 +15,4 @@ const cabangSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model("cabang", cabangSchema)
+export default mongoose.model("cabang", cabangSchema)

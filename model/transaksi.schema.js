@@ -5,10 +5,6 @@ const transaksiSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    price_perkg : {
-        type : Number,
-        required : true
-    },
     total_price : {
         type : Number,
         required : true
@@ -23,4 +19,4 @@ const transaksiSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model("transaksi", transaksiSchema)
+export default mongoose.model("transaksi", transaksiSchema)

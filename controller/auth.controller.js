@@ -111,28 +111,22 @@ const authController = {
 
     change_password : async (req, res, next) => {
         try {
-            let oldPassword        = req.body.oldPassword
             let newPassword        = req.body.newPassword
             let confirmNewPassword = req.body.confirmNewPassword
             
-            if(oldPassword !== newPassword && oldPassword !== confirmNewPassword) {
-                if(newPassword === confirmNewPassword) {
-                    const salt   = await bcrypt.genSalt(10)
-                    newPassword  = await bcrypt.hash(newPassword, salt)
-                    const update = await authModels.updateOne({_id: req.user.id_user}, {password : newPassword})
+            if(newPassword === confirmNewPassword) {
+                const salt   = await bcrypt.genSalt(10)
+                newPassword  = await bcrypt.hash(newPassword, salt)
+                const update = await authModels.updateOne({_id: req.user.id_user}, {password : newPassword})
 
-                    if(update) {
-                        response(res, 200, "success change password")
-                    } else {
-                        response(res, 400, "failed change password")
-                    }
+                if(update) {
+                    response(res, 200, "success change password")
                 } else {
-                    response(res, 400, "new password and confirm password not match")
+                    response(res, 400, "failed change password")
                 }
             } else {
-                response(res, 400, "old password and new password must difference")
+                response(res, 400, "new password and confirm password not match")
             }
-
         } catch (error) {
             response(res, 400, error.message)
         }

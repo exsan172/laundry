@@ -3,6 +3,7 @@ import {connect} from './config/db.config.js'
 import express from "express";
 import morgan from 'morgan';
 import authRouter from './router/auth.router.js'
+import transactionRouter from './router/transaction.router.js'
 
 connect()
 const app  = express()
@@ -12,7 +13,7 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use("/auth", authRouter)
-app.use("/transaction", authRouter)
+app.use("/transaction", transactionRouter)
 app.use((req,res) => {
     res.status(404).json({
         statusCode : 404,

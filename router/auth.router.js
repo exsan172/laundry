@@ -32,7 +32,7 @@ router.post("/forgot-password",
 ])
 
 router.post("/change-password", 
-    body("oldPassword").isLength({min : 8}),
+    body("confirmNewPassword").isLength({min : 8}),
     body("newPassword").isLength({min : 8}),
     validatorMiddleware,
     checkToken, [
