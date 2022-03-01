@@ -130,6 +130,15 @@ const authController = {
         } catch (error) {
             response(res, 400, error.message)
         }
+    },
+
+    getUser : async (req, res, next) => {
+        try {
+            const user = await authModels.find({}, { password : 0 })
+            response(res, 200, "success", user)
+        } catch (error) {
+            response(res, 400, error.message)
+        }
     }
 }
 

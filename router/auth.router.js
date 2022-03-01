@@ -5,6 +5,10 @@ import {validatorMiddleware} from '../middleware/validator.middleware.js'
 import checkToken from '../middleware/verifyToken.middleware.js'
 const router = express.Router()
 
+router.get("/get-user", checkToken, [
+    authController.getUser
+])
+
 router.post("/login", 
     body("username").isEmail(), 
     body("password").isLength({min : 8}), 
