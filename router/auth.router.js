@@ -1,9 +1,43 @@
 import express from "express";
-import authController from "../controller/auth.controller";
+import {body} from "express-validator"
+import authController from "../controller/auth.controller.js";
+import {validatorMiddleware} from '../middleware/validator.middleware.js'
+import checkToken from '../middleware/verifyToken.middleware.js'
 const router = express.Router()
 
-router.get("/login", [
+router.post("/login", 
+    body("username").isEmail(), 
+    body("password").isLength({min : 8}), 
+    validatorMiddleware, [
+    
     authController.login
 ])
 
-module.exports = router
+router.post("/register",
+    body("name").notEmpty(), 
+    body("username").isEmail(),
+    body("password").isLength({min : 8}),
+    body("role").notEmpty(),
+    validatorMiddleware,
+    checkToken, [
+
+    authController.register
+])
+
+router.post("/forgot-password", 
+    body("username").isEmail(),
+    validatorMiddleware, [
+
+    authController.forgot_password
+])
+
+router.post("/change-password", 
+    body("oldPassword").isLength({min : 8}),
+    body("newPassword").isLength({min : 8}),
+    validatorMiddleware,
+    checkToken, [
+
+    authController.change_password
+])
+
+export default router
