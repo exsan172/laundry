@@ -15,7 +15,7 @@ app.use(morgan('tiny'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.TOKEN_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
