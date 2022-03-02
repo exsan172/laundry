@@ -7,6 +7,3 @@ Feature : <br/>
 #Menambah atau mengurangi cabang <br/>
 #Pendataan pendapatan per cabang <br/>
 #Menambah atau mengurangi karyawan <br/>
-#Absensi karyawan <br/>
-#Mengatur gaji karyawan per hari <br/>
-#report keuangan bulanan
