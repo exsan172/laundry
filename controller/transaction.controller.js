@@ -36,7 +36,7 @@ const transactionController = {
                 cabang    : cabang,
                 price     : price,
                 createdBy : req.user.id_user,
-                createdAt : moment().tz("Asia/Jakarta")
+                createdAt : moment().tz("Asia/Jakarta").utc(true)
             })
 
             if(create) {
@@ -72,7 +72,9 @@ const transactionController = {
 
     getTransaksi : async (req, res, next) => {
         try {
-            const get = await transaksiModels.find({id_cabang : req.params.id})
+            const fromDate = moment(req.params.fromDate).utc(true)
+            const toDate   = moment(req.params.toDate).utc(true)
+            const get      = await transaksiModels.find({id_cabang : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } })
             response(res, 200, "success", get)
         } catch (error) {
             response(res, 400, error.message)
@@ -89,7 +91,7 @@ const transactionController = {
                 id_cabang    : idCabang,
                 total_price  : totalWeight*getPrice.price,
                 total_weight : totalWeight,
-                createdAt    : moment().tz("Asia/Jakarta")
+                createdAt    : moment().tz("Asia/Jakarta").utc(true)
             })
 
             if(create) {

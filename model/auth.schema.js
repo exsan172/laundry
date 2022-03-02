@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    id_cabang : {
+        type : String,
+        required : true
+    },
     createdBy : {
         type : String,
         required : true

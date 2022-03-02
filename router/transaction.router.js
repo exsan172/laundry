@@ -32,7 +32,7 @@ router.get("/delete-cabang/:id", [
     transactionRouter.deleteCabang
 ])
 
-router.get("/get-transaksi/:id", checkToken, [
+router.get("/get-transaksi/:id/:fromDate/:toDate", checkToken, [
     transactionRouter.getTransaksi
 ])
 

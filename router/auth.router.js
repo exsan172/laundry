@@ -9,6 +9,10 @@ router.get("/get-user", checkToken, [
     authController.getUser
 ])
 
+router.get("/get-user-cabang/:id", checkToken, [
+    authController.getUserCabang
+])
+
 router.post("/login", 
     body("username").isEmail(), 
     body("password").isLength({min : 8}), 

@@ -42,6 +42,7 @@ const authController = {
             let username = req.body.username
             let password = req.body.password
             let role     = req.body.role
+            let idCabang = req.body.idCabang
 
             if(role !== "employe" && role !== "owner" && role !== "admin") {
                 return response(res, 400, "role must employe, owner, or admin")
@@ -60,8 +61,9 @@ const authController = {
                     username : username,
                     password : password,
                     role     : role,
+                    id_cabang: idCabang,
                     createdBy: req.user.id_user,
-                    createdAt: moment().tz("Asia/Jakarta").utc()
+                    createdAt: moment().tz("Asia/Jakarta").utc(true)
                 })
     
                 if(create) {
@@ -91,11 +93,18 @@ const authController = {
                         pass: process.env.PASSWORD_EMAIL
                     }
                 })
-    
+                
+                const token = await jwt.sign({
+                    id_user : findUser._id,
+                    name : findUser.name,
+                    username : findUser.username,
+                    role : findUser.role
+                }, process.env.TOKEN_KEY)
+
                 const mailOptions = {
                     to      : findUser.username,
                     subject : 'confirm forgot password',
-                    html    : "<p>click <a href='google.com'>here</a> to change new password"
+                    html    : `<p>hi, ${findUser.name} click <a href='${process.env.DOMAIN+"/public/confirm-password/"+token}'>here</a> to change new password`
                 };
                 
                 transporter.sendMail(mailOptions, (error, info) => {
@@ -139,6 +148,15 @@ const authController = {
     getUser : async (req, res, next) => {
         try {
             const user = await authModels.find({createdBy : req.user.id_user}, { password : 0 })
+            response(res, 200, "success", user)
+        } catch (error) {
+            response(res, 400, error.message)
+        }
+    },
+
+    getUserCabang : async (req, res, next) => {
+        try {
+            const user = await authModels.find({id_cabang : req.params.id}, { password : 0 })
             response(res, 200, "success", user)
         } catch (error) {
             response(res, 400, error.message)
