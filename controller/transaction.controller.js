@@ -85,10 +85,12 @@ const transactionController = {
         try {
             const idCabang     = req.body.id_cabang
             const totalWeight  = req.body.total_weight
+            const name         = req.body.name
             
             const getPrice = await cabangModels.findOne({_id : idCabang})
             const create = await transaksiModels.create({
                 id_cabang    : idCabang,
+                name         : name, 
                 total_price  : totalWeight*getPrice.price,
                 total_weight : totalWeight,
                 createdAt    : moment().tz("Asia/Jakarta").utc(true)
@@ -109,10 +111,12 @@ const transactionController = {
             const idTransaksi  = req.body.id_transaksi
             const idCabang     = req.body.id_cabang
             const totalWeight  = req.body.total_weight
+            const name         = req.body.name
             
             const getPrice = await cabangModels.findOne({_id : idCabang})
             const create = await transaksiModels.updateOne({_id : idTransaksi}, {
                 id_cabang    : idCabang,
+                name         : name,
                 total_price  : totalWeight*getPrice.price,
                 total_weight : totalWeight,
             })

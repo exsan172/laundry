@@ -9,6 +9,10 @@ const transaksiSchema = new mongoose.Schema({
         type : Number,
         required : true
     },
+    name : {
+        type : String,
+        required : true
+    },
     total_weight : {
         type : Number,
         required : true

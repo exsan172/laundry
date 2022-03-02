@@ -38,6 +38,7 @@ router.get("/get-transaksi/:id/:fromDate/:toDate", checkToken, [
 
 router.post("/input-transaksi",
     body("id_cabang").notEmpty(),
+    body("name").notEmpty(),
     body("total_weight").isNumeric(),
     validatorMiddleware,
     checkToken, [
@@ -47,6 +48,7 @@ router.post("/input-transaksi",
 
 router.post("/edit-transaksi",
     body("id_transaksi").notEmpty(),
+    body("name").notEmpty(),
     body("id_cabang").notEmpty(),
     body("total_weight").isNumeric(),
     validatorMiddleware,
