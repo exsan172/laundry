@@ -7,7 +7,7 @@ import transaksiModels from '../model/transaksi.schema.js'
 const transactionController = {
     getCabang : async (req, res, next) => {
         try {
-            const get = await cabangModels.find({})
+            const get = await cabangModels.find({createdBy : req.user.id_user})
             response(res, 200, "success", get)
         } catch (error) {
             response(res, 400, error.message)
@@ -33,8 +33,9 @@ const transactionController = {
             const price  = req.body.price
 
             const create = await cabangModels.create({
-                cabang : cabang,
-                price  : price,
+                cabang    : cabang,
+                price     : price,
+                createdBy : req.user.id_user,
                 createdAt : moment().tz("Asia/Jakarta")
             })
 
@@ -78,7 +79,7 @@ const transactionController = {
         }
     },
 
-    createCabang : async (req, res, next) => {
+    createTransaksi : async (req, res, next) => {
         try {
             const idCabang     = req.body.id_cabang
             const totalWeight  = req.body.total_weight
@@ -101,7 +102,7 @@ const transactionController = {
         }
     },
 
-    updateCabang : async (req, res, next) => {
+    updateTransaksi : async (req, res, next) => {
         try {
             const idTransaksi  = req.body.id_transaksi
             const idCabang     = req.body.id_cabang
@@ -115,9 +116,9 @@ const transactionController = {
             })
 
             if(create) {
-                response(res, 201, "success create")
+                response(res, 201, "success update")
             } else {
-                response(res, 400, "failed create")
+                response(res, 400, "failed update")
             }
         } catch (error) {
             response(res, 400, error.message)

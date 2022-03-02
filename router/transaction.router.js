@@ -42,7 +42,7 @@ router.post("/input-transaksi",
     validatorMiddleware,
     checkToken, [
 
-    transactionRouter.createCabang
+    transactionRouter.createTransaksi
 ])
 
 router.post("/edit-transaksi",
@@ -52,7 +52,7 @@ router.post("/edit-transaksi",
     validatorMiddleware,
     checkToken, [
 
-    transactionRouter.updateCabang
+    transactionRouter.updateTransaksi
 ])
 
 router.get("/delete-transaksi/:id", checkToken, [

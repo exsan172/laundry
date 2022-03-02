@@ -1,4 +1,3 @@
-
 import moment from 'moment-timezone'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -47,6 +46,10 @@ const authController = {
             if(role !== "employe" && role !== "owner" && role !== "admin") {
                 return response(res, 400, "role must employe, owner, or admin")
             }
+
+            if(req.user.role !== "owner") {
+                return response(res, 400, "your role must owner to register new user")
+            }
             
             const findUsername = await authModels.findOne({ username : username })
             if(findUsername === null) {
@@ -57,6 +60,7 @@ const authController = {
                     username : username,
                     password : password,
                     role     : role,
+                    createdBy: req.user.id_user,
                     createdAt: moment().tz("Asia/Jakarta").utc()
                 })
     
@@ -134,7 +138,7 @@ const authController = {
 
     getUser : async (req, res, next) => {
         try {
-            const user = await authModels.find({}, { password : 0 })
+            const user = await authModels.find({createdBy : req.user.id_user}, { password : 0 })
             response(res, 200, "success", user)
         } catch (error) {
             response(res, 400, error.message)

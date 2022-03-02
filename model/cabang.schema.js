@@ -9,6 +9,10 @@ const cabangSchema = new mongoose.Schema({
         type : Number,
         required : true
     },
+    createdBy : {
+        type : String,
+        required : true
+    },
     createdAt : {
         type : Date,
         required : true
