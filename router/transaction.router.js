@@ -36,6 +36,10 @@ router.get("/get-transaksi/:id/:fromDate/:toDate", checkToken, [
     transactionRouter.getTransaksi
 ])
 
+router.get("/detail-transaksi/:id", checkToken, [
+    transactionRouter.detailTransaksi
+])
+
 router.post("/input-transaksi",
     body("id_cabang").notEmpty(),
     body("name").notEmpty(),

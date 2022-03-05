@@ -81,6 +81,15 @@ const transactionController = {
         }
     },
 
+    detailTransaksi : async (req, res, next) => {
+        try {
+            const get = await transaksiModels.find({_id : req.params.id})
+            response(res, 200, "success", get)
+        } catch (error) {
+            response(res, 400, error.message)
+        }
+    },
+
     createTransaksi : async (req, res, next) => {
         try {
             const idCabang     = req.body.id_cabang
