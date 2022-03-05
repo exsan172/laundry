@@ -23,10 +23,11 @@ const authController = {
                     }, process.env.TOKEN_KEY)
 
                     response(res, 200, "success", {
-                        id_user : findUsername._id,
-                        username: findUsername.username,
-                        role    : findUsername.role,
-                        token   : token
+                        id_user   : findUsername._id,
+                        id_cabang : findUsername.id_cabang,
+                        username  : findUsername.username,
+                        role      : findUsername.role,
+                        token     : token
                     })
                 } else {
                     response(res, 400, "username or password not match")    
