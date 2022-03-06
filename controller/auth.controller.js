@@ -91,7 +91,8 @@ const authController = {
 
             if(findUser) {
                 let transporter = mailer.createTransport({
-                    service: 'gmail',
+                    host : process.env.HOST_SMTP,
+                    port : process.env.PORT_SMTP,
                     auth: {
                         user: process.env.USER_EMAIL,
                         pass: process.env.PASSWORD_EMAIL
@@ -106,6 +107,7 @@ const authController = {
                 }, process.env.TOKEN_KEY)
 
                 const mailOptions = {
+                    from    : process.env.USER_EMAIL,
                     to      : findUser.username,
                     subject : 'confirm forgot password',
                     html    : `<p>hi, ${findUser.name} click <a href='${process.env.DOMAIN+"/public/confirm-password/"+token}'>here</a> to change new password`
