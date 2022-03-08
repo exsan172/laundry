@@ -40,7 +40,7 @@ const transactionController = {
             })
 
             if(create) {
-                response(res, 201, "success create")
+                response(res, 201, "success create", create)
             } else {
                 response(res, 400, "failed create")
             }
@@ -61,7 +61,7 @@ const transactionController = {
             })
 
             if(update) {
-                response(res, 201, "success update")
+                response(res, 201, "success update", update)
             } else {
                 response(res, 400, "failed update")
             }
@@ -106,7 +106,7 @@ const transactionController = {
             })
 
             if(create) {
-                response(res, 201, "success create")
+                response(res, 201, "success create", create)
             } else {
                 response(res, 400, "failed create")
             }
@@ -123,15 +123,15 @@ const transactionController = {
             const name         = req.body.name
             
             const getPrice = await cabangModels.findOne({_id : idCabang})
-            const create = await transaksiModels.updateOne({_id : idTransaksi}, {
+            const update = await transaksiModels.updateOne({_id : idTransaksi}, {
                 id_cabang    : idCabang,
                 name         : name,
                 total_price  : totalWeight*getPrice.price,
                 total_weight : totalWeight,
             })
 
-            if(create) {
-                response(res, 201, "success update")
+            if(update) {
+                response(res, 201, "success update", update)
             } else {
                 response(res, 400, "failed update")
             }

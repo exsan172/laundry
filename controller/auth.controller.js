@@ -71,7 +71,7 @@ const authController = {
                 })
     
                 if(create) {
-                    response(res, 200, "success register")
+                    response(res, 200, "success register", create)
                 } else {
                     response(res, 400, "failed register")
                 }
@@ -139,7 +139,7 @@ const authController = {
                 const update = await authModels.updateOne({_id: req.user.id_user}, {password : newPassword})
 
                 if(update) {
-                    response(res, 200, "success change password")
+                    response(res, 200, "success change password", update)
                 } else {
                     response(res, 400, "failed change password")
                 }
