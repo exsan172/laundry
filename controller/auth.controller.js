@@ -19,7 +19,8 @@ const authController = {
                         id_user : findUsername._id,
                         name : findUsername.name,
                         username : findUsername.username,
-                        role : findUsername.role
+                        role : findUsername.role,
+                        id_cabang : findUsername.id_cabang
                     }, process.env.TOKEN_KEY)
 
                     response(res, 200, "success", {
