@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import mailer from 'nodemailer'
 import {response} from '../config/response.config.js'
 import authModels from '../model/auth.schema.js'
+import cabangSchema from '../model/cabang.schema.js'
 
 const authController = {
     login : async (req, res, next) => {
@@ -57,6 +58,7 @@ const authController = {
                 return response(res, 400, "your role must owner to register new user")
             }
             
+            const findCabangName = await cabangSchema.findOne({ _id : idCabang })
             const findUsername = await authModels.findOne({ username : username })
             if(findUsername === null) {
                 const salt   = await bcrypt.genSalt(10)
@@ -67,6 +69,7 @@ const authController = {
                     password : password,
                     role     : role,
                     id_cabang: idCabang,
+                    cabang   : findCabangName.cabang,
                     createdBy: req.user.id_user,
                     createdAt: moment().tz("Asia/Jakarta").utc(true)
                 })
