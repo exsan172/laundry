@@ -48,7 +48,7 @@ const authController = {
             let username = req.body.username
             let password = req.body.password
             let role     = req.body.role
-            let idCabang = req.body.idCabang
+            let idCabang = role == "owner" ? "owner" : req.body.idCabang
 
             if(role !== "employe" && role !== "owner" && role !== "admin") {
                 return response(res, 400, "role must employe, owner, or admin")
@@ -58,7 +58,7 @@ const authController = {
                 return response(res, 400, "your role must owner to register new user")
             }
             
-            const findCabangName = await cabangSchema.findOne({ _id : idCabang })
+            const findCabangName = role === "owner" ? { cabang: "owner" } : await cabangSchema.findOne({ _id : idCabang })
             const findUsername = await authModels.findOne({ username : username })
             if(findUsername === null) {
                 const salt   = await bcrypt.genSalt(10)
