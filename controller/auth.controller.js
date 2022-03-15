@@ -154,7 +154,9 @@ const authController = {
 
     getUser : async (req, res, next) => {
         try {
-            const user = await authModels.find({createdBy : req.user.id_user}, { password : 0 })
+            const user = await authModels.find({createdBy : req.user.id_user}, { password : 0 }).sort({
+                createdAt : -1
+            })
             response(res, 200, "success", user)
         } catch (error) {
             response(res, 400, error.message)
@@ -163,7 +165,9 @@ const authController = {
 
     getUserCabang : async (req, res, next) => {
         try {
-            const user = await authModels.find({id_cabang : req.params.id}, { password : 0 })
+            const user = await authModels.find({id_cabang : req.params.id}, { password : 0 }).sort({
+                createdAt : -1
+            })
             response(res, 200, "success", user)
         } catch (error) {
             response(res, 400, error.message)

@@ -7,7 +7,9 @@ import transaksiModels from '../model/transaksi.schema.js'
 const transactionController = {
     getCabang : async (req, res, next) => {
         try {
-            const get = await cabangModels.find({createdBy : req.user.id_user})
+            const get = await cabangModels.find({createdBy : req.user.id_user}).sort({
+                createdAt : -1
+            })
             response(res, 200, "success", get)
         } catch (error) {
             response(res, 400, error.message)
@@ -74,7 +76,9 @@ const transactionController = {
         try {
             const fromDate = moment(req.params.fromDate).utc(true)
             const toDate   = moment(req.params.toDate).utc(true)
-            const get      = await transaksiModels.find({id_cabang : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } })
+            const get      = await transaksiModels.find({id_cabang : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } }).sort({
+                createdAt : -1
+            })
             response(res, 200, "success", get)
         } catch (error) {
             response(res, 400, error.message)
