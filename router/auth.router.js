@@ -9,6 +9,10 @@ router.get("/get-user", checkToken, [
     authController.getUser
 ])
 
+router.get("/delete-user/:id", checkToken, [
+    authController.deleteUser
+])
+
 router.get("/get-user-cabang/:id", checkToken, [
     authController.getUserCabang
 ])

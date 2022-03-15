@@ -175,6 +175,19 @@ const authController = {
         } catch (error) {
             response(res, 400, error.message)
         }
+    },
+
+    deleteUser : async (req, res, next) => {
+        try {
+            const user = await authModels.deleteOne({_id : req.params.id})
+            if(user){
+                response(res, 200, "success", user)
+            } else {
+                response(res, 400, "success", failed)
+            }
+        } catch (error) {
+            response(res, 400, error.message)
+        }
     }
 }
 
