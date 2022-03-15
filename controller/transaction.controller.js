@@ -85,6 +85,19 @@ const transactionController = {
         }
     },
 
+    getTransaksiOwner : async (req, res, next) => {
+        try {
+            const fromDate = moment(req.params.fromDate).utc(true)
+            const toDate   = moment(req.params.toDate).utc(true)
+            const get      = await transaksiModels.find({id_owner : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } }).sort({
+                createdAt : -1
+            })
+            response(res, 200, "success", get)
+        } catch (error) {
+            response(res, 400, error.message)
+        }
+    },
+
     detailTransaksi : async (req, res, next) => {
         try {
             const get = await transaksiModels.find({_id : req.params.id})

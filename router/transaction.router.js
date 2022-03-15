@@ -36,6 +36,10 @@ router.get("/get-transaksi/:id/:fromDate/:toDate", checkToken, [
     transactionRouter.getTransaksi
 ])
 
+router.get("/get-transaksi-owner/:id/:fromDate/:toDate", checkToken, [
+    transactionRouter.getTransaksiOwner
+])
+
 router.get("/detail-transaksi/:id", checkToken, [
     transactionRouter.detailTransaksi
 ])
