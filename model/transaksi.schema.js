@@ -5,6 +5,10 @@ const transaksiSchema = new mongoose.Schema({
         type : String,
         required : true
     },
+    cabang : {
+        type : String,
+        required : true
+    },
     total_price : {
         type : Number,
         required : true

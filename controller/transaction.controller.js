@@ -103,7 +103,8 @@ const transactionController = {
             const getPrice = await cabangModels.findOne({_id : idCabang})
             const create = await transaksiModels.create({
                 id_cabang    : idCabang,
-                name         : name, 
+                cabang       : getPrice.cabang,
+                name         : name,
                 total_price  : totalWeight*getPrice.price,
                 total_weight : totalWeight,
                 createdAt    : moment().tz("Asia/Jakarta").utc(true)
