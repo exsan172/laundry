@@ -52,4 +52,16 @@ router.post("/change-password",
     authController.change_password
 ])
 
+router.post("/update-user",
+    body("name").notEmpty(), 
+    body("username").isEmail(),
+    body("role").notEmpty(),
+    body("id").notEmpty(),
+    body("idCabang").notEmpty(),
+    validatorMiddleware,
+    checkToken, [
+
+    authController.updateUser
+])
+
 export default router

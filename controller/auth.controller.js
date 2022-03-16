@@ -188,7 +188,44 @@ const authController = {
         } catch (error) {
             response(res, 400, error.message)
         }
+    },
+
+    updateUser : async (req, res, next) => {
+        try {
+            let name     = req.body.name
+            let username = req.body.username
+            let role     = req.body.role
+            let idUser   = req.body.id
+            let idCabang = role == "owner" ? "owner" : req.body.idCabang
+
+            if(role !== "employe" && role !== "owner" && role !== "admin") {
+                return response(res, 400, "role must employe, owner, or admin")
+            }
+
+            if(req.user.role !== "owner") {
+                return response(res, 400, "your role must owner to update user")
+            }
+            
+            const findCabangName = role === "owner" ? { cabang: "owner" } : await cabangSchema.findOne({ _id : idCabang })
+            const create = await authModels.updateOne({ _id : idUser }, {
+                name     : name,
+                username : username,
+                role     : role,
+                id_cabang: idCabang,
+                cabang   : findCabangName.cabang,
+            })
+
+            if(create) {
+                response(res, 200, "success update", create)
+            } else {
+                response(res, 400, "failed update")
+            }
+
+        } catch (error) {
+            response(res, 400, error.message)
+        }
     }
+    
 }
 
 export default authController
