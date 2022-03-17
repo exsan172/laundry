@@ -88,6 +88,42 @@ const authController = {
         }
     },
 
+    publicRegister : async (req, res, next) => {
+        try {
+            let name     = req.body.name
+            let username = req.body.username
+            let password = req.body.password
+            let role     = "owner"
+            
+            const findUsername = await authModels.findOne({ username : username })
+            if(findUsername === null) {
+                const salt   = await bcrypt.genSalt(10)
+                password     = await bcrypt.hash(password, salt)
+                const create = await authModels.create({
+                    name     : name,
+                    username : username,
+                    password : password,
+                    role     : role,
+                    id_cabang: role,
+                    cabang   : role,
+                    createdBy: role,
+                    createdAt: moment().tz("Asia/Jakarta").utc(true)
+                })
+    
+                if(create) {
+                    response(res, 200, "success register", create)
+                } else {
+                    response(res, 400, "failed register")
+                }
+            } else {
+                response(res, 400, "email already use")
+            }
+
+        } catch (error) {
+            response(res, 400, error.message)
+        }
+    },
+
     forgot_password : async (req, res, next) => {
         try {
             const username = req.body.username

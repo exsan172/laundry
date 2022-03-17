@@ -25,6 +25,15 @@ router.post("/login",
     authController.login
 ])
 
+router.post("/public-register",
+    body("name").notEmpty(), 
+    body("username").isEmail(),
+    body("password").isLength({min : 8}),
+    validatorMiddleware, [
+
+    authController.publicRegister
+])
+
 router.post("/register",
     body("name").notEmpty(), 
     body("username").isEmail(),
