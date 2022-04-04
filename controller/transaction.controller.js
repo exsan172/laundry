@@ -76,7 +76,7 @@ const transactionController = {
         try {
             const fromDate = moment(req.params.fromDate).utc(true)
             const toDate   = moment(req.params.toDate).utc(true)
-            const get      = await transaksiModels.find({id_cabang : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } }).sort({
+            const get      = await transaksiModels.find({id_cabang : req.params.id, createdAt: { $gte: new Date(fromDate), $lte :new Date(toDate) } }).sort({
                 createdAt : -1
             })
             response(res, 200, "success", get)
@@ -89,7 +89,7 @@ const transactionController = {
         try {
             const fromDate = moment(req.params.fromDate).utc(true)
             const toDate   = moment(req.params.toDate).utc(true)
-            const get      = await transaksiModels.find({id_owner : req.params.id, createdAt: { $gte: fromDate, $lte :toDate } }).sort({
+            const get      = await transaksiModels.find({id_owner : req.params.id, createdAt: { $gte: new Date(fromDate), $lte :new Date(toDate) } }).sort({
                 createdAt : -1
             })
             response(res, 200, "success", get)
